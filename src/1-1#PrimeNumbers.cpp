@@ -1,12 +1,16 @@
 //
-//  1-1#PrimeNumbers.c
+//  1-1#PrimeNumbers.cpp
 //
 //
-//  Created by Jisang lee on 13.03.21.
+//  Created by Jisang lee on 16.03.21.
 //
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
+#include <limits>
+#include <cctype>
+
+using namespace std;
 
 //Total number of primes
 int number_of_primes;
@@ -20,43 +24,42 @@ int main ()
     *primes,
     i;
 
-    
+    string option;
+
     //Main loop
     while(1) {
         
         //asking for integer
-        printf("Print prime numbers below (q for quit): ");
-        int is_number = scanf("%d", &input);
-        
+        cout << "Print prime numbers below (q for quit): ";
+        cin >> option;
         //check if number
-        if (is_number != 1) {
-            char ch;
-            scanf("%c", &ch);
-            
-            //check if quit
-            if (ch == 'q') {
-                printf("Exiting..\n");
-                exit(0);
-            }
-            else {
-                printf("### Wrong Input ###\n\n");
-                continue;
-            }
+        if (isdigit(option[0])) {
+            goto is_number;
         }
-        
+        if (option == "q") {
+                cout << "Exiting..\n";
+                exit(0);
+        }
+        else {
+                cout << "### Wrong Input ###\n\n";
+                continue;
+        }
+
+        is_number:
+        input = stoi(option);
         //check if wrong number input
         if (input == 1) {
-            printf("### 1 is not a prime number ###\n");
-            printf("### Wrong Input ###\n\n");
+            cout << "### 1 is not a prime number ###\n";
+            cout << "### Wrong Input ###\n\n";
             continue;
         }
         else if (input < 1) {
-            printf("### Wrong Input ###\n\n");
+            cout << "### Wrong Input ###\n\n";
             continue;
         }
 
         //sets temporary size for primes array
-        primes = (int *) malloc(input * sizeof(int));
+        primes = new int [input];
         
         //populates array
         populate_array(input, primes);
@@ -64,10 +67,11 @@ int main ()
         //prints out prime numbers
         for (i = 0; i < number_of_primes; i++) {
             if (i == number_of_primes - 1)
-                printf("%d\n", *(primes+i));
+                cout << *(primes+i) << endl;
             else
-                printf("%d, ", *(primes+i));
+                cout << *(primes+i) << ", ";
         }
+        delete primes;
     }
     return 0;
 }
@@ -104,6 +108,6 @@ void populate_array(int input, int *primes)
             continue;
         }
     }
-    primes = realloc(primes, number_of_primes * sizeof(int));
+    primes = new int [number_of_primes];
     
 }
