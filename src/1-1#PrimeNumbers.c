@@ -77,14 +77,12 @@ void populate_array(int input, int *primes)
 {
     int i,
     j,
-    fac,
-    *tmp;
+    fac;
     
     //resets number of prime for use
     number_of_primes = 0;
     
     //since there cant be more primes then the maximum number size is set correctly
-    tmp = (int *) malloc(input * sizeof(int));
     
     for (i = 2; i <= input; i++) {
         
@@ -98,18 +96,13 @@ void populate_array(int input, int *primes)
             if (fac == 2)
                 break;
         }
-        
+        primes = realloc(primes, number_of_primes * sizeof(int));
         //if prime number, add to array tmp
         if (fac < 2) {
-            tmp[number_of_primes] = i;
+            primes[number_of_primes] = i;
             number_of_primes++;
             continue;
         }
     }
     
-    //populate to main array
-    primes = realloc(primes, number_of_primes * sizeof(int));
-    for (i = 0; i < number_of_primes; i++) {
-        primes[i] = tmp[i];
-    }
 }
