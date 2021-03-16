@@ -1,5 +1,5 @@
 //
-//  1-1#PrimeNumbers.cpp
+//  2-3#PrimeNumbers.cpp
 //
 //
 //  Created by Jisang lee on 16.03.21.
