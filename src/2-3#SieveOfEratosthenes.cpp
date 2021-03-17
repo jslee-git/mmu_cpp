@@ -3,8 +3,8 @@
 //
 //
 //  Created by Jisang lee on 17.03.21.
-//  
-//  
+//
+//
 
 #include <iostream>
 #include <cstdlib>
@@ -72,7 +72,9 @@ int main ()
             else
                 cout << *(primes+i) << ", ";
         }
-        delete primes;
+        //deallocates memory primes and sets to NULL
+        delete[] primes;
+        primes = 0;
     }
     return 0;
 }
@@ -108,7 +110,7 @@ void populate_array(int input, int *primes)
         }
     }
     //assign to array prime
-    for (i = 0; i < input; i++) {
+    for (i = 0; i < input - 1; i++) {
         if (tmp[i] != 0) {
             primes[number_of_primes] = tmp[i];
             number_of_primes++;
@@ -116,4 +118,7 @@ void populate_array(int input, int *primes)
     }
     primes = new int [number_of_primes];
     
+    //dealocates memory and NULL's tmp array
+    delete[] tmp;
+    tmp = 0;
 }
