@@ -3,7 +3,7 @@
 //
 //
 //  Created by Jisang lee on 17.03.21.
-//  
+//
 //
 
 #include <iostream>
@@ -122,3 +122,4 @@ void populate_array(int input, int *primes)
     delete[] tmp;
     tmp = 0;
 }
+
