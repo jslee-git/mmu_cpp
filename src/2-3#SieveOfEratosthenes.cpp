@@ -122,4 +122,3 @@ void populate_array(int input, int *primes)
     delete[] tmp;
     tmp = 0;
 }
-
