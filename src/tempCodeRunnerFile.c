@@ -182,10 +182,10 @@ int minegame(int width, int height)
         int y;
     } coor_in;
 
-    //init coverfield to 1
+    //init coverfield to 0
         for (i = 0; i < height; i++) {
             for (j = 0; j < width; j++)
-                coverfield[i][j] = 1;
+                coverfield[i][j] = 0;
         }
 
     while (gamestate == 1) {
@@ -198,7 +198,7 @@ int minegame(int width, int height)
         get_coordinates(&coor_in.x, &coor_in.y, height);
 
         // if 0 0 ending game
-        if (coor_in.x == -1 && coor_in.y == -1) {
+        if (coor_in.x == -1 && coor_in.y == 5) {
             printf("Ending Game...\n");
             break;
         }
@@ -212,8 +212,8 @@ int minegame(int width, int height)
         }
 
         //reveal if not
-        if (coverfield[coor_in.y][coor_in.x] != 0) {
-            coverfield[coor_in.y][coor_in.x] = 0;
+        if (coverfield[coor_in.y][coor_in.x] != 1) {
+            coverfield[coor_in.y][coor_in.x] = 1;
         }
         else {
             printf("# Already revealed!\n");
@@ -233,7 +233,7 @@ int print_minefield (char *coverfield, int height, int width)
     int i, j;
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            if (coverfield[i * width + j] == 1)
+            if (coverfield[i * width + j] == 0)
                 printf("☐ ");
             else if (minefield[i * width + j] == 48)
                 printf("x ");
@@ -267,19 +267,13 @@ int get_coordinates(int *x, int *y, int height)
 int floodfill_reveal_field(char *coverfield, int height, int width)
 {
     int i, j;
-    int is_filled[height][width];
-    //init is filled
-        for (i = 0; i < height; i++) {
-            for (j = 0; j < width; j++)
-                is_filled[i][j] = 0;
-        }
 
     //floodfill
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
 
 
-            if (minefield[j + width * i] == 0 && coverfield[j + width * i] == 0 && is_filled[i][j] == 0) {
+            if (minefield[j + width * i] == 0 && coverfield[j + width * i] == 1) {
                 int m, n;
 
                 for (m = -1; m < 2; m++) {
@@ -291,13 +285,13 @@ int floodfill_reveal_field(char *coverfield, int height, int width)
                         if (is_outside_border(off_y, off_x, width, height) == 1) {
                             continue;
                         }
-                        else if (coverfield[off_y * width + off_x] == 1) {
-                            coverfield[off_y * width + off_x] = 0;
-                            is_filled[i][j] = 1;
-                            int i = 0, j = 0;
+                        else if (coverfield[off_y * width + off_x] != 1) {
+                            coverfield[off_y * width + off_x] = 1;
                         }
                     }
                 }
+
+
             }
 
 
